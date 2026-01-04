@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Мой билет</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+    <link rel="stylesheet" href="index.css" />
+    <style>
+        /* Стили для редактируемых полей */
+        .editable {
+            cursor: pointer;
+            border-bottom: 1px dashed transparent;
+            display: inline-block;
+            min-width: 30px;
+            transition: all 0.2s ease;
+            outline: none;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+        
+        .editable:hover {
+            border-bottom: 1px dashed #4b4d57;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .editable:focus {
+            border-bottom: 1px solid #4b4d57;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Стили для активной кнопки */
+        .button-12.active .background-13 {
+            background: #f0edf9;
+            transform: scale(0.98);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .button-12 .background-13 {
+            transition: all 0.2s ease;
+        }
+        
+        .button-12:active .background-13 {
+            background: #e8e4f5;
+            transform: scale(0.96);
+        }
+        
+        /* Общие стили */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            background: #ffffff;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        /* Отключаем выделение текста для всех элементов кроме редактируемых */
+        *:not(.editable) {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        /* Фиксированные элементы */
+        body {
+            padding-top: 53px;
+            padding-bottom: 67px;
+        }
+        
+        /* Для безопасных зон iPhone */
+        @supports (padding: max(0px)) {
+            body {
+                padding-top: max(53px, env(safe-area-inset-top));
+                padding-bottom: max(67px, env(safe-area-inset-bottom));
+                padding-left: env(safe-area-inset-left);
+                padding-right: env(safe-area-inset-right);
+            }
+            
+            .fixed-header {
+                padding-top: env(safe-area-inset-top);
+                height: calc(53px + env(safe-area-inset-top));
+            }
+            
+            .fixed-footer {
+                padding-bottom: env(safe-area-inset-bottom);
+                height: calc(67px + env(safe-area-inset-bottom));
+            }
+        }
+        
+        /* Убираем скроллбар на iOS */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Улучшаем качество изображений на ретине */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .image, .image-1, .image-5, .image-17, .image-19, .image-1c, .image-1e {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Верхняя фиксированная шапка -->
+    <div class="fixed-header">
+        <div class="groups">
+            <span class="my-ticket">Мой билет</span>
+            <div class="image"></div>
+            <div class="image-1"></div>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="root">
+            <div class="image-2">
+                <div class="groups-3">
+                    <div class="groups-4">
+                        <div class="background">
+                            <span id="current-time" class="time">14:34</span>
+                            <span id="current-date" class="date">6 декабря</span>
+                            <div class="image-5"></div>
+                        </div>
+                    </div>
+                    <div class="background-6">
+                        <div class="groups-7">
+                            <div class="flex-row">
+                                <div class="background-8"></div>
+                                <span id="countdown-minutes" class="number-44">45</span>
+                                <span id="countdown-seconds" class="number-20">00</span>
+                            </div>
+                            <div class="flex-row-d">
+                                <span class="minutes">Минуты</span>
+                                <span class="seconds">Секунды</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="groups-9">
+                        <div class="background-a"></div>
+                        <div class="groups-b">
+                            <div class="flex-row-bc">
+                                <div class="ticket">
+                                    <span class="ticket-info">1 билет - </span>
+                                    <span class="price">45 </span>
+                                    <span class="currency">₽</span>
+                                </div>
+                                <div class="button">
+                                    <div class="background-c">
+                                        <span class="travel">Проезд</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="mpv-vpopat">МПВ "ВПОПАТ №1"</span>
+                            <div class="image-d"></div>
+                        </div>
+                        <div class="groups-e">
+                            <span id="editable-text" class="ab-531-25 editable" contenteditable="true">AB 531 25</span>
+                            <span id="editable-number" class="no-95 editable" contenteditable="true">№9595</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="groups-f">
+                    <div class="button-10">
+                        <div class="background-11">
+                            <span class="buy-ticket">КУПИТЬ БИЛЕТ</span>
+                        </div>
+                    </div>
+                    <div class="button-12" id="present-button">
+                        <div class="background-13">
+                            <span class="present">предъявить</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Нижнее фиксированное меню -->
+    <div class="fixed-footer">
+        <div class="background-14">
+            <div class="groups-15">
+                <div class="footer-item active">
+                    <div class="footer-icon"></div>
+                    <span class="footer-text">Мой билет</span>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-icon"></div>
+                    <span class="footer-text">История</span>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-icon"></div>
+                    <span class="footer-text">Оплата</span>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-icon"></div>
+                    <span class="footer-text">Меню</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Сохраняем время входа
+        let entryTime = null;
+        
+        function saveEntryTime() {
+            const now = new Date();
+            
+            // Проверяем, есть ли уже сохраненное время входа
+            if (!localStorage.getItem('entryTimeSaved')) {
+                // Сохраняем время входа
+                localStorage.setItem('entryTime', now.getTime());
+                localStorage.setItem('entryTimeSaved', 'true');
+                
+                // Сохраняем отображаемое время и дату
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                localStorage.setItem('displayTime', `${hours}:${minutes}`);
+                
+                const day = now.getDate();
+                const monthNames = [
+                    'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+                    'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+                ];
+                const month = monthNames[now.getMonth()];
+                localStorage.setItem('displayDate', `${day} ${month}`);
+            }
+            
+            // Отображаем сохраненное время
+            displaySavedTime();
+        }
+        
+        function displaySavedTime() {
+            const savedTime = localStorage.getItem('displayTime');
+            const savedDate = localStorage.getItem('displayDate');
+            
+            if (savedTime) {
+                document.getElementById('current-time').textContent = savedTime;
+            }
+            
+            if (savedDate) {
+                document.getElementById('current-date').textContent = savedDate;
+            }
+        }
+        
+        // Сбрасываем при обновлении
+        function checkPageRefresh() {
+            if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+                localStorage.removeItem('entryTimeSaved');
+                localStorage.removeItem('displayTime');
+                localStorage.removeItem('displayDate');
+            }
+        }
+        
+        // 2. Обратный отсчет
+        let countdownMinutes = 45;
+        let countdownSeconds = 0;
+        
+        function updateCountdown() {
+            const minutesElement = document.getElementById('countdown-minutes');
+            const secondsElement = document.getElementById('countdown-seconds');
+            
+            if (countdownSeconds === 0) {
+                if (countdownMinutes === 0) {
+                    countdownMinutes = 45;
+                    countdownSeconds = 0;
+                } else {
+                    countdownMinutes--;
+                    countdownSeconds = 59;
+                }
+            } else {
+                countdownSeconds--;
+            }
+            
+            minutesElement.textContent = countdownMinutes.toString().padStart(2, '0');
+            secondsElement.textContent = countdownSeconds.toString().padStart(2, '0');
+        }
+        
+        // 3. Редактируемые поля
+        function setupEditableFields() {
+            const editableText = document.getElementById('editable-text');
+            const editableNumber = document.getElementById('editable-number');
+            
+            function saveToLocalStorage(element, key) {
+                element.addEventListener('blur', function() {
+                    localStorage.setItem(key, this.textContent);
+                });
+                
+                const savedValue = localStorage.getItem(key);
+                if (savedValue) {
+                    element.textContent = savedValue;
+                }
+            }
+            
+            saveToLocalStorage(editableText, 'ticket-text');
+            saveToLocalStorage(editableNumber, 'ticket-number');
+            
+            editableText.addEventListener('blur', function() {
+                if (!this.textContent.trim()) {
+                    this.textContent = 'AB 531 25';
+                }
+            });
+            
+            editableNumber.addEventListener('blur', function() {
+                if (!this.textContent.trim()) {
+                    this.textContent = '№9595';
+                }
+                if (!this.textContent.startsWith('№')) {
+                    this.textContent = '№' + this.textContent.replace('№', '');
+                }
+            });
+            
+            // Выделяем текст при клике
+            editableText.addEventListener('click', function(e) {
+                if (window.getSelection().toString() === '') {
+                    const range = document.createRange();
+                    range.selectNodeContents(this);
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
+            });
+            
+            editableNumber.addEventListener('click', function(e) {
+                if (window.getSelection().toString() === '') {
+                    const range = document.createRange();
+                    range.selectNodeContents(this);
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
+            });
+        }
+        
+        // 4. Кнопка "предъявить"
+        function setupPresentButton() {
+            const presentButton = document.getElementById('present-button');
+            
+            presentButton.addEventListener('click', function() {
+                this.classList.toggle('active');
+                
+                // Виброотклик на мобильных
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(50);
+                }
+            });
+        }
+        
+        // 5. Предотвращаем масштабирование на iOS
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+        
+        // 6. Убираем контекстное меню на iOS
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // 7. Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            // Проверяем обновление страницы
+            checkPageRefresh();
+            
+            // Сохраняем время входа
+            saveEntryTime();
+            
+            // Обратный отсчет
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            
+            // Редактируемые поля
+            setupEditableFields();
+            
+            // Кнопка "предъявить"
+            setupPresentButton();
+            
+            // Определяем iOS
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            
+            if (isIOS) {
+                // Оптимизации для iOS
+                document.body.style.webkitOverflowScrolling = 'touch';
+                document.body.style.overflow = 'auto';
+                
+                // Убираем синее выделение при тапе
+                document.addEventListener('touchstart', function() {}, {passive: true});
+            }
+            
+            // Убираем выделение при тапе на кнопки
+            document.addEventListener('touchstart', function(e) {
+                if (e.target.tagName === 'BUTTON' || e.target.tagName === 'DIV' && e.target.className.includes('button')) {
+                    e.target.style.webkitTapHighlightColor = 'transparent';
+                }
+            });
+        });
+        
+        // 8. Обработка изменения ориентации экрана
+        window.addEventListener('resize', function() {
+            // Обновляем отступы при изменении размера
+            setTimeout(function() {
+                const header = document.querySelector('.fixed-header');
+                const footer = document.querySelector('.fixed-footer');
+                
+                if (header && footer) {
+                    document.body.style.paddingTop = header.offsetHeight + 'px';
+                    document.body.style.paddingBottom = footer.offsetHeight + 'px';
+                }
+            }, 100);
+        });
+        
+        // 9. Загрузка изображений с обработкой ошибок
+        window.addEventListener('load', function() {
+            const images = document.querySelectorAll('img, .image, .image-1, .image-5, .image-17, .image-19, .image-1c, .image-1e');
+            images.forEach(function(img) {
+                img.addEventListener('error', function() {
+                    console.log('Ошибка загрузки изображения:', this.src);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
